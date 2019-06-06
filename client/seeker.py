@@ -11,7 +11,8 @@ import socket
 import json
 
 obj = socket.socket()
-obj.connect(("127.0.0.1",9070))
+address = input("Input server IP:")
+obj.connect((address,9070))
 
 def command(command):
     req_bytes = bytes(json.dumps(command), encoding="utf-8")
