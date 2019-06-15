@@ -2,8 +2,8 @@
 #                  OrchardSeeker
 #
 # Author:   Guozhi Wang
-# Date:     Jun 05 2019
-# Verwion:  0.1.2
+# Date:     Jun 16 2019
+# Verwion:  0.3.2
 # This file is delivered within OrchardPackage.
 # ==============================================
 
@@ -50,7 +50,7 @@ def refresh():
             if choice == 'n' or choice == 'N':
                 flag = False
                 choice_legal = True
-        data.append({"id": id, "port": port, "secret": secret})
+        data.append({"id": id, "port": port, "cipher": "chacha20-ietf-poly1305", "secret": secret})
     cmd["data"] = json.dumps(data)
     command(cmd)
 

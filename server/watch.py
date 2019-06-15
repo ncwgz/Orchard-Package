@@ -2,8 +2,8 @@
 #                   OrchardWatch
 #
 # Author:   Guozhi Wang
-# Date:     Jun 05 2019
-# Verwion:  0.1.0
+# Date:     Jun 16 2019
+# Verwion:  0.2.0
 # This file is delivered within OrchardPackage.
 # ==============================================
 
@@ -83,7 +83,7 @@ def addUser(id, port, secret):
         yml = getYml()
         yml['keys'].append({
             'id': id,
-            'port': port,
+            'port': int(port),
             'cipher': CIPHER,
             'secret': secret
         })
@@ -208,8 +208,8 @@ class Slaver(socketserver.BaseRequestHandler):
                 conn.sendall(bytes(msg, encoding="utf-8"))
 
             elif req["action"] == "synchronize":
-                yml = {'keys': None}
                 data = json.loads(req["data"])
+                yml = {}
                 yml['keys'] = data
                 synchronize(yml)
                 msg = ("Synchronized.")
