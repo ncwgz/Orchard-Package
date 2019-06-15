@@ -13,11 +13,11 @@ Based on Shadowsocks-GO, Outline-ss-server.
 
 ## Installation
 
-1. Download all files in the server directory to your server.
+1. Download all files in the server directory on your server.
 2. $ chmod a+x Install.sh
 3. $ bash ./Install.sh
 
-If the installation successed, a hint will ben printed.
+If the installation successed, a hint will been printed.
 
 ## Usage
 
