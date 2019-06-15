@@ -109,6 +109,7 @@ def synchronize(yml):
     l1 = len(yml_old['keys'])
     l2 = len(yml['keys'])
     saveYml(yml)
+    shadowsocksRefresh()
     log('SYN_USR', 'The yaml file has been synchronized. User amount: ' + str(l1) + ' ==> ' + str(l2), 1)
 
 # 获取内存使用信息
