@@ -50,7 +50,7 @@ def refresh():
             if choice == 'n' or choice == 'N':
                 flag = False
                 choice_legal = True
-        data.append({"id": id, "port": port, "cipher": "chacha20-ietf-poly1305", "secret": secret})
+        data.append({"id": id, "port": int(port), "cipher": "chacha20-ietf-poly1305", "secret": secret})
     cmd["data"] = json.dumps(data)
     command(cmd)
 
