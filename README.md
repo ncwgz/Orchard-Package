@@ -4,9 +4,12 @@ Based on Shadowsocks-GO, Outline-ss-server.
 
 ---
 
-## Supporting System
+## Supporting System & Environment
 
 1. Ubuntu 16.04 or newer
+2. Python 3.6 or newer
+3. **PyYaml 5 or newer** (Old version of pip may install PyYaml 3 for you, which will results failure!)
+4. Make sure 'python' refers to Python3 instead of Python2.
 
 ## Installation
 
