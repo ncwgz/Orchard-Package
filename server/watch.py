@@ -80,16 +80,19 @@ def addUser(id, port, secret):
     if checkDuplicate(id):
         log('ADD_USR', 'User ' + id + ' duplicated!', 1)
     else:
-        yml = getYml()
-        yml['keys'].append({
-            'id': id,
-            'port': int(port),
-            'cipher': CIPHER,
-            'secret': secret
-        })
-        saveYml(yml)
-        log('ADD_USR', 'User ' + id + ' has been added.', 2)
+        addUserWithoutRefresh(id, port, secret)
         shadowsocksRefresh()
+
+def addUserWithoutRefresh(id, port, secret):
+    yml = getYml()
+    yml['keys'].append({
+        'id': id,
+        'port': int(port),
+        'cipher': CIPHER,
+        'secret': secret
+    })
+    saveYml(yml)
+    log('ADD_USR', 'User ' + id + ' has been added.', 2)
 
 # 按用户名删除用户
 def deleteUserByID(id):
@@ -188,7 +191,7 @@ class Slaver(socketserver.BaseRequestHandler):
         log('CON_EST', 'Established connection with ' + client_ip + ':' + (str)(client_port))
 
         while True:
-            ret_bytes = conn.recv(1024)
+            ret_bytes = conn.recv(4096)
             ret_str = str(ret_bytes, encoding="utf-8")
             req = json.loads(ret_str)
 
@@ -199,6 +202,12 @@ class Slaver(socketserver.BaseRequestHandler):
             elif req["action"] == "add":
                 user = json.loads(req["data"])
                 addUser(user["id"], user["port"], user["secret"])
+                msg = ("Added.")
+                conn.sendall(bytes(msg, encoding="utf-8"))
+
+            elif req["action"] == "addd":
+                user = json.loads(req["data"])
+                addUserWithoutRefresh(user["id"], user["port"], user["secret"])
                 msg = ("Added.")
                 conn.sendall(bytes(msg, encoding="utf-8"))
 
