@@ -211,6 +211,11 @@ class Slaver(socketserver.BaseRequestHandler):
                 msg = ("Added.")
                 conn.sendall(bytes(msg, encoding="utf-8"))
 
+            elif req["action"] == "refresh":
+                shadowsocksRefresh()
+                msg = ("Refreshed.")
+                conn.sendall(bytes(msg, encoding="utf-8"))
+
             elif req["action"] == "delete":
                 id = req["data"]
                 deleteUserByID(id)
