@@ -24,21 +24,21 @@ YMLPATH = '/usr/local/orchard/config.yml'
 
 # 开启SSG(ShadowsocksGO)服务
 def shadowsocksGo():
-    shellscript = 'service ssg start'
+    shellscript = 'service SSG start'
     rc, out = subprocess.getstatusoutput(shellscript)
     log('SSG_EST', 'Shadowsocks GO server is running!', 2)
 
 # 关闭SSG服务
 def shadowsocksShut():
-    shellscript = 'service ssg stop'
+    shellscript = 'service SSG stop'
     rc, out = subprocess.getstatusoutput(shellscript)
     log('SSG_END', 'Shadowsocks GO server closed!', 1)
 
 # 重启SSG服务
 def shadowsocksRefresh():
-    shellscript = 'service ssg stop'
+    shellscript = 'service SSG stop'
     rc, out = subprocess.getstatusoutput(shellscript)
-    shellscript = 'service ssg start'
+    shellscript = 'service SSG start'
     rc, out = subprocess.getstatusoutput(shellscript)
     log('SSG_RST', 'Shadowsocks GO server restarted!', 2)
 
@@ -93,6 +93,15 @@ def addUserWithoutRefresh(id, port, secret):
     })
     saveYml(yml)
     log('ADD_USR', 'User ' + id + ' has been added.', 2)
+
+def deleteUsers():
+    yml = getYml()
+    for i in range(len(yml['keys'])):
+        yml['keys'].pop(i)
+    saveYml(yml)
+    log('DEL_USR', 'All users has been deleted.', 2)
+    shadowsocksRefresh()
+    return 0
 
 # 按用户名删除用户
 def deleteUserByID(id):
@@ -219,6 +228,11 @@ class Slaver(socketserver.BaseRequestHandler):
             elif req["action"] == "delete":
                 id = req["data"]
                 deleteUserByID(id)
+                msg = ("Deleted.")
+                conn.sendall(bytes(msg, encoding="utf-8"))
+            
+            elif req["action"] == "delete_all":
+                deleteUsers()
                 msg = ("Deleted.")
                 conn.sendall(bytes(msg, encoding="utf-8"))
 
