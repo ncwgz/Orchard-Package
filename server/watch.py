@@ -97,7 +97,7 @@ def addUserWithoutRefresh(id, port, secret):
 def deleteUsers():
     yml = getYml()
     for i in range(len(yml['keys'])):
-        yml['keys'].pop(i)
+        yml['keys'].pop(0)
     saveYml(yml)
     log('DEL_USR', 'All users has been deleted.', 2)
     shadowsocksRefresh()
