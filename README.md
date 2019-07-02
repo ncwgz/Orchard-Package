@@ -17,7 +17,7 @@ Based on Shadowsocks-GO, Outline-ss-server.
 2. $ chmod a+x Install.sh
 3. $ sudo bash ./Install.sh
 
-If the installation successed, a hint will been printed.
+If the the Package is installed successfully, a hint will be printed.
 
 ## Usage
 
