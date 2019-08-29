@@ -201,8 +201,12 @@ class Slaver(socketserver.BaseRequestHandler):
 
         while True:
             ret_bytes = conn.recv(4096)
-            ret_str = str(ret_bytes, encoding="utf-8")
-            req = json.loads(ret_str)
+            try:
+                ret_str = str(ret_bytes, encoding="utf-8")
+                req = json.loads(ret_str)
+            except:
+                log('MSG_ERR', 'Illegal packet received from ' + (str)(client_ip))
+                continue
 
             if req["action"] == "health":
                 log('MSG_OUT', 'Health information sent to ' + (str)(client_ip))
@@ -259,6 +263,10 @@ class Slaver(socketserver.BaseRequestHandler):
                 msg = ("Connection closed.")
                 conn.sendall(bytes(msg, encoding="utf-8"))
                 break
+            elif req["action"] == "check":
+                log('CON_CHK', 'Check request from' + (str)(client_ip))
+                msg = ('OK')
+                conn.sendall(bytes(msg, encoding='utf-8'))
 
             else:
                 log('MSG_ERR', 'Illegal command received from ' + (str)(client_ip))
