@@ -205,7 +205,6 @@ class Slaver(socketserver.BaseRequestHandler):
                 ret_str = str(ret_bytes, encoding="utf-8")
                 req = json.loads(ret_str)
             except:
-                log('MSG_ERR', 'Illegal packet received from ' + (str)(client_ip))
                 continue
 
             if req["action"] == "health":
