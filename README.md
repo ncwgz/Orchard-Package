@@ -31,3 +31,5 @@ If the the Package is installed successfully, a hint will be printed.
 ## Usage
 
 Use seeker.py in the client directory on your client to control your servers.
+
+## Happy surfing the real Internet!
